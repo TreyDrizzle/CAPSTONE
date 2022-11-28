@@ -14,14 +14,25 @@
 </head>
 
     <body>
-        
-     <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                  <a class="navbar-brand" href="#">Search</a>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Search</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="form-inline" action="" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search"  >
+                                <a class="btn btn-link" href="">Search</a>
+                            </div>
+                        </form>
+                    </li> 
+                </ul>
             </div>
-        </div>
-    </nav>
+        </nav>   
+    
 
     <!--Add a dealer table here -->
 
