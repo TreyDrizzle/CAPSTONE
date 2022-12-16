@@ -61,7 +61,7 @@ def logout_request(request):
     # Logout user in the request
     logout(request)
     
-    return redirect(request, 'djangoapp/contact.html', context)
+    return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
 
@@ -84,7 +84,7 @@ def registration_request(request):
             # Create user in auth_user table
             user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password)
 
-            return redirect('djangoapp/djangoapp')
+            return redirect('djangoapp:index')
         else:
             return render(request, 'djangoapp/registration.html', context)
 
