@@ -64,6 +64,6 @@ jobs: # list of things to do
         run: pylint *.py
         working-directory: server
         
-        name: 'Lint Code'
+        name: 'Lint Code 2'
 
         
