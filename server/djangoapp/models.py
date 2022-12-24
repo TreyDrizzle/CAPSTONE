@@ -31,7 +31,8 @@ class CarMake(models.Model):
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
 class CarModel(models.Model):
-    make = models.ForeignKey('CarMake', on_delete=models.RESTRICT)
+    # - Many-To-One relationship to Car Make model (One Car Make has many Car Models, using ForeignKey field)
+    make = models.ForeignKey('CarMake', on_delete=models.CASCADE)
     name = models.CharField(null=False, max_length=30, default='SampleModel')
     CAR_CHOICES = (
     ("SEDAN", "Sedan"),
@@ -45,4 +46,4 @@ class CarModel(models.Model):
     year = models.IntegerField()
 
     def __str__(self):
-        return (self.carmake, self.name, self.car, self.year, )
+        return f'{self.name},{self.make},{self.year}'
