@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
-from .restapis import get_request, get_dealers_from_cf
+from .restapis import get_request, get_dealers_from_cf, get_dealer_by_id_from_cf, get_dealer_reviews_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -94,18 +94,19 @@ def get_dealerships(request):
         context["dealership_list"] = dealerships
         return render(request, 'djangoapp/index.html', context)
 # Create a `get_dealer_details` view to render the reviews of a dealer
-def get_dealer_details(request, dealername, id):
-    context = {}
+def get_dealer_details(request, id):
     if request.method == "GET":
-        url = "https://us-south.functions.appdomain.cloud/api/v1/web/CD0201-xxx-nodesample123_Tyler/dealership-package/get-dealerships"
-        context2={}
-        reviews = get_dealer_reviews_from_cf(url, id)
-        review_all = ' '.join([review_list.review for review_list in reviews])
-        context = reviews
-        context2["list"]=context
-        context2["dealername"]=dealername
-        context2["id"]=id
-        return render(request, 'djangoapp/dealer_details.html', context2)
+        context = {}
+        dealer_url = "https://us-south.functions.appdomain.cloud/api/v1/web/CD0201-xxx-nodesample123_Tyler/dealership-package/get-dealerships"
+        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+        context["dealer"] = dealer
+    
+        review_url = "https://us-south.functions.appdomain.cloud/api/v1/web/CD0201-xxx-nodesample123_Tyler/dealership-package/get-review"
+        reviews = get_dealer_reviews_from_cf(review_url, id=id)
+        print(reviews)
+        context["reviews"] = reviews
+        
+        return render(request, 'djangoapp/dealer_details.html', context)
           
 
 # Create a `add_review` view to submit a review
@@ -116,12 +117,6 @@ def add_review(request, id, dealername):
     user = request.user
     if user.is_authenticated:
         if request.method == "POST":
-            #@requires_csrf_token
-            #json_payload = {}
-            #json_payload["review"] = request.POST['review']
-            #json_payload["purchase"] = request.POST.get('purchase')
-            #json_payload["car"] = request.POST.get('car')
-            #json_payload["purchasedate"] = request.POST.get('purchasedate')
             
             username = request.user.username
             print(request.POST)
@@ -141,23 +136,19 @@ def add_review(request, id, dealername):
             payload["car_make"] = car.make.name
             payload["car_model"] = car.name
             payload["car_year"] = int(car.year)
-
             new_payload = {}
             new_payload["review"] = payload
             
-            url = "https://us-south.functions.appdomain.cloud/api/v1/web/CD0201-xxx-nodesample123_Tyler/dealership-package/get-dealerships"
+            url = "https://us-south.functions.appdomain.cloud/api/v1/web/CD0201-xxx-nodesample123_Tyler/dealership-package/post-review"
             post_request(url, new_payload)
             return redirect('djangoapp:dealer_details', **{"dealername":dealername, "id":id})
             
-            #url = "https://3dbc2a14.us-south.apigw.appdomain.cloud/postreview/api/review"
-            #result = post_request(url, json_payload)
-            #return HttpResponse(json_payload)
-        
+           
         elif request.method == "GET":
             models = list(CarModel.car_manager.all().filter(dealerid=id))
             context["cars"] = models
             context["id"] = id
-            #dealer = list(CarDealer.dealer_manager.all().filter(id=id))
+            dealer = list(CarDealer.dealer_manager.all().filter(id=id))
             context["dealer"] = dealername
             return render(request, 'djangoapp/add_review.html', context)
 

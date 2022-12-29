@@ -29,7 +29,7 @@ class CarMake(models.Model):
     def __str__(self):
         return self.name
 
-# <HINT> Create a plain Python class `DealerReview` to hold review data
+
 class CarModel(models.Model):
     # - Many-To-One relationship to Car Make model (One Car Make has many Car Models, using ForeignKey field)
     make = models.ForeignKey('CarMake', on_delete=models.CASCADE)
@@ -73,3 +73,28 @@ class CarDealer:
 
     def __str__(self):
         return "Dealer name: " + self.full_name
+
+# <HINT> Create a plain Python class `DealerReview` to hold review data
+class DealerReview:
+
+    def __init__(self, dealership, name, purchase, id, review, sentiment, **kwargs):
+        
+        self.dealership = dealership
+        self.name = name
+        self.purchase = purchase
+        self.id = id
+        self.review = review
+        self.sentiment = sentiment
+        
+        if purchase:
+            self.purchase_date = kwargs["purchase_date"]
+            self.car_make = kwargs["car_make"]
+            self.car_model = kwargs["car_model"]
+            self.car_year = kwargs["car_year"]
+        
+        
+    def __str__(self):
+        return "Review: " + self.review
+
+
+
