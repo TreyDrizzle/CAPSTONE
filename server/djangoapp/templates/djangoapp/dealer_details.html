@@ -63,9 +63,9 @@
                     <body>
                     <!--Add review form here -->
                     
-                
+                    
                     <!-- Stylize Registration form -->
-                        <form action="{%url'djangoapp:add_review'dealerId}}" method="post">
+                        <form action="{% url 'djangoapp:add_review' dealer.id%}"  method="post">
                             <div class="container"> <!--Style root div with .container class -->
                                 {% csrf_token %}
                                 <h1>Please write your review</h1>

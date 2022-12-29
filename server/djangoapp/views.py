@@ -150,5 +150,5 @@ def add_review(request, id, dealername):
             context["id"] = id
             dealer = list(CarDealer.dealer_manager.all().filter(id=id))
             context["dealer"] = dealername
-            return render(request, 'djangoapp/add_review.html', context)
+            return render(request, 'djangoapp/dealer_details.html', context)
 
