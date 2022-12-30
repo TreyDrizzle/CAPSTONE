@@ -23,9 +23,12 @@ from django.utils.timezone import now
 
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 class CarMake(models.Model):
-    name = models.CharField(null=False, max_length=30)
-    description = models.CharField(max_length=30)
-
+    # - Name
+    name = models.CharField(null=False, max_length=50)
+    # - Description
+    description = models.CharField(null=True, max_length=500)
+    # - Any other fields you would like to include in car make model
+    # - __str__ method to print a car make object
     def __str__(self):
         return self.name
 
