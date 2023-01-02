@@ -1,6 +1,6 @@
 import requests
 import json
-from .models import CarDealer
+from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 
 def get_request(url, **kwargs):
@@ -97,7 +97,7 @@ def get_dealer_reviews_from_cf(url, **kwargs):
         json_result = get_request(url, id=id)
     else:
         json_result = get_request(url)
-    print(json_result,"96")
+    print(json_result,"1")
     if json_result:
         reviews = json_result["data"]["docs"]
         for dealer_review in reviews:
@@ -131,5 +131,13 @@ def get_dealer_reviews_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
 
-
+def post_request(url, payload, **kwargs):
+    print(kwargs)
+    print("POST to {} ".format(url))
+    print(payload)
+    response = requests.post(url, params=kwargs, json=payload)
+    status_code = response.status_code
+    print("With status {} ".format(status_code))
+    json_data = json.loads(response.text)
+    return json_data
 
