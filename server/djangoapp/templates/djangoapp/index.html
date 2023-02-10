@@ -17,8 +17,13 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <div class="navbar-header">
-              <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Dealership Review</a>
+              <a class="navbar-brand" href="{% url 'djangoapp:about' %}">
+                    <button> About Page </button>
+                </a>
         </div>
+        </a>
+        Tyler's First Aapp
+        </a>
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li>
@@ -76,7 +81,9 @@
     </div>
     <footer class="fixed-bottom">
           <div class="container-fluid">
-            <a href="{% url 'djangoapp:contact' %}">Contact Us</a>
+            <a href="{% url 'djangoapp:contact' %}">
+                <button> Contact Page </button>
+            </a>
           </div>
     </footer>
 </div>
