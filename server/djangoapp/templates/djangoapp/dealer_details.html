@@ -12,7 +12,8 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <div class="navbar-header">
-              <a class="navbar-brand" href="{% url 'djangoapp:about' %}">Dealerships</a>
+        <a href="{% url 'djangoapp:index' %}">
+                <button> Back to Dealership Review </button>
         </div>
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
@@ -75,7 +76,9 @@
         </div>
     </div>
 </div>
+</body>
 
+  </a>
 </body>
 
 

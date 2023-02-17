@@ -13,7 +13,7 @@ class CarModelAdmin(admin.ModelAdmin):
     search_fields = ['name', 'type']
 
 # CarMakeAdmin class with CarModelInline
-class CarMakeAdmin(admin.ModelAdmin):
+class CarMakeAdmin(admin.ModelAdmin): 
     inlines = [CarModelInline]
     list_display = ('name', 'description')
 # Register your models here.
